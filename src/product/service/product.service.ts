@@ -10,10 +10,7 @@ export class ProductService {
     private productRepository: Repository<Product>,
   ) { }
 
-  async create(data: Partial<Product>): Promise<Product> {
-    const product = this.productRepository.create(data);
-    return this.productRepository.save(product);
-  }
+ 
 
   findAll(): Promise<Product[]> {
     return this.productRepository.find({
@@ -41,6 +38,25 @@ export class ProductService {
       },
       relations: { category: true, user: true }
     });
+  }
+
+  /* Lógica de Recomendações de Produtos Saudáveis*/
+  async recomendarSaudaveis(): Promise<Product[]> {
+  return this.productRepository.find({
+    where: [
+      { description: ILike('%saudável%') },
+      { description: ILike('%fit%') },
+      { description: ILike('%natural%') },
+     /* { nameProduct: ILike('%integral%') },
+      { nameProduct: ILike('%sem açúcar%') },*/
+    ],
+    relations: ['category', 'user'],
+  });
+}
+
+  async create(data: Partial<Product>): Promise<Product> {
+    const product = this.productRepository.create(data);
+    return this.productRepository.save(product);
   }
 
   async update(product: Product): Promise<Product> {

@@ -26,6 +26,7 @@ export class Product {
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
+
   @IsNotEmpty()
   @Column({ type: 'date', nullable: false })
   validity: Date;

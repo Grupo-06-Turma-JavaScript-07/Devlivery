@@ -1,22 +1,10 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { ValidationPipe } from "@nestjs/common";
 
-@Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'db_delivey',
-      entities: [],
-      synchronize: true,
-    })
-  ],
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-  controllers: [],
-  providers: [],
-})
-
-export class AppModule { }
+  await app.listen(process.env.PORT ?? 4000);
+}
+bootstrap();

@@ -35,6 +35,13 @@ export class ProductController {
   findByProduct(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
     return this.productService.findByProduct(nameProduct);
   }
+
+  @Get('/recomendados')
+  @HttpCode(HttpStatus.OK)
+  getRecomendados() {
+    return this.productService.recomendarSaudaveis();
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() product: Product): Promise<Product> {
