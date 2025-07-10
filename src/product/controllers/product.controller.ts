@@ -32,8 +32,8 @@ export class ProductController {
   }
   @Get('/titulo/:titulo')
   @HttpCode(HttpStatus.OK)
-  findByAllTitulo(@Param('titulo') titulo: string): Promise<Product[]> {
-    return this.productService.findAllByTitulo(titulo);
+  findByAllTitulo(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
+    return this.productService.findAllByTitulo(nameProduct);
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -48,6 +48,6 @@ export class ProductController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id', ParseIntPipe) id: number) {
-    return this.productService.delete(id);
+    return this.Service.delete(id);
   }
 }

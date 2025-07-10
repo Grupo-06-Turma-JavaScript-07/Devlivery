@@ -16,7 +16,7 @@ export class Product {
 
   @IsNotEmpty()
   @Column({ length: 50, nullable: false })
-  product: string;
+  nameProduct: string;
 
   @IsNotEmpty()
   @Column({ length: 1000, nullable: false })
