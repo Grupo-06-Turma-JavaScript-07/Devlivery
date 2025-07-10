@@ -1,6 +1,6 @@
-/*import { forwardRef, Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { Bcrypt } from "./bcrypt/bcrypt";
-import { UsuarioModule } from "../usuario/usuario.module";
+import { UserModule } from "../user/user.module";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./constants/constants";
@@ -11,11 +11,11 @@ import { JwtStrategy } from "./strategy/jwt.strategy";
 
 @Module({
     imports: [
-        forwardRef(() => UsuarioModule),
+        forwardRef(() => UserModule),
         PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,
-            signOptions: {expiresIn: '1h'},
+            signOptions: { expiresIn: '1h' },
         })
 
     ],
@@ -23,4 +23,4 @@ import { JwtStrategy } from "./strategy/jwt.strategy";
     providers: [Bcrypt, AuthService, LocalStrategy, JwtStrategy],
     exports: [Bcrypt],
 })
-export class AuthModule {};*/
+export class AuthModule { };

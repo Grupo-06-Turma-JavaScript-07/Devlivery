@@ -10,7 +10,7 @@ export class ProductService {
     private productRepository: Repository<Product>,
   ) { }
 
- 
+
 
   findAll(): Promise<Product[]> {
     return this.productRepository.find({
@@ -42,17 +42,17 @@ export class ProductService {
 
   /* Lógica de Recomendações de Produtos Saudáveis*/
   async recomendarSaudaveis(): Promise<Product[]> {
-  return this.productRepository.find({
-    where: [
-      { description: ILike('%saudável%') },
-      { description: ILike('%fit%') },
-      { description: ILike('%natural%') },
-     /* { nameProduct: ILike('%integral%') },
-      { nameProduct: ILike('%sem açúcar%') },*/
-    ],
-    relations: ['category', 'user'],
-  });
-}
+    return this.productRepository.find({
+      where: [
+        { description: ILike('%saudável%') },
+        { description: ILike('%fit%') },
+        { description: ILike('%natural%') },
+        { nameProduct: ILike('%integral%') },
+        { nameProduct: ILike('%sem açúcar%') },
+      ],
+      relations: ['category', 'user'],
+    });
+  }
 
   async create(data: Partial<Product>): Promise<Product> {
     const product = this.productRepository.create(data);
@@ -65,14 +65,6 @@ export class ProductService {
     return await this.productRepository.save(product);
   }
 
-
-  /*async update(postagem: Postagem): Promise<Postagem> {
-    await this.findById(postagem.id);
-
-    await this.TemaService.findById(postagem.tema.id);
-
-    return await this.postagemRepository.save(postagem);
-  } modelo blog*/
 
   async delete(id: number): Promise<void> {
     const product = await this.findById(id);

@@ -13,10 +13,12 @@ import {
 } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
 import { ProductService } from '../service/product.service';
-/*import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';*/
+import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
-/*@UseGuards(JwtAuthGuard)*/
+@UseGuards(JwtAuthGuard)
 @Controller('/Product')
+@ApiBearerAuth()
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
 
@@ -36,7 +38,7 @@ export class ProductController {
     return this.productService.findByProduct(nameProduct);
   }
 
-  @Get('/recomendados')
+  @Get('recomendados/:lista')
   @HttpCode(HttpStatus.OK)
   getRecomendados() {
     return this.productService.recomendarSaudaveis();
