@@ -1,4 +1,4 @@
-# 🥗 DevLlivery - Deploy de sabor e saúde no seu dia
+# 🥗 DevLivery - Deploy de sabor e saúde no seu dia
 
 Bem-vindo ao repositório do **DevLlivery** — uma plataforma de **delivery de comida saudável** desenvolvida com foco em praticidade, organização e bem-estar! 💚
 
