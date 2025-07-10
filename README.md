@@ -45,7 +45,7 @@ Este repositório contém o **backend** da aplicação, desenvolvido com **Node.
 | Campo         | Tipo     | Descrição                        |
 |---------------|----------|----------------------------------|
 | nome          | string   | Nome do produto                  |
-| descricao     | string   | Descrição do alimento            |
+| descricao     | string   | Ingredientes do produto          |
 | preco         | number   | Preço do produto                 |
 | validade      | Date     | Data de validade                 |
 | categoria     | Categoria| Categoria associada              |
