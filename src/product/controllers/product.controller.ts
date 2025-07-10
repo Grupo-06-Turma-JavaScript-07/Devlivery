@@ -12,13 +12,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
-import { ProductService } from '../services/product.service';
-import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { ProductService } from '../service/product.service';
+/*import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';*/
 
-@UseGuards(JwtAuthGuard)
+/*@UseGuards(JwtAuthGuard)*/
 @Controller('/Product')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -32,8 +32,8 @@ export class ProductController {
   }
   @Get('/nameProduct/:nameProduct')
   @HttpCode(HttpStatus.OK)
-  findByAllTitulo(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
-    return this.productService.findAllByTitulo(nameProduct);
+  findByProduct(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
+    return this.productService.findByProduct(nameProduct);
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -48,6 +48,6 @@ export class ProductController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id', ParseIntPipe) id: number) {
-    return this.Service.delete(id);
+    return this.productService.delete(id);
   }
 }

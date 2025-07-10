@@ -1,34 +1,35 @@
 /*import { ApiProperty } from "@nestjs/swagger"*/
 import { IsEmail, IsNotEmpty, IsOptional, MinLength } from "class-validator"
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Product } from "../../product/entities/product.entity"
 /*import { Product } from "../../product/entities/product.entity"*/
 
-@Entity({name: "tb_user"})
+@Entity({ name: "tb_user" })
 export class User {
-    
-    @PrimaryGeneratedColumn() 
+
+    @PrimaryGeneratedColumn()
     id: number
 
     /*incluir os @api*/
     @IsNotEmpty()
-    @Column({length: 255, nullable: false}) 
+    @Column({ length: 255, nullable: false })
     nome: string
 
     @IsNotEmpty()
     @IsEmail()
-    @Column({length: 255, nullable: false })
+    @Column({ length: 255, nullable: false })
     usuario: string
 
     @IsNotEmpty()
     @MinLength(8)
-    @Column({length: 255, nullable: false }) 
+    @Column({ length: 255, nullable: false })
     senha: string
 
     @IsOptional()
-    @Column({length: 5000 }) 
+    @Column({ length: 5000 })
     foto: string
 
-    /*@OneToMany(() => Product, (product) => product.usuario)
-    product: Product[]*/
-   
+    @OneToMany(() => Product, (product) => product.user)
+    product: Product[]
+
 }

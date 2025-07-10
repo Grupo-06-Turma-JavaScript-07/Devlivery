@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
-import { User } from '../../user/entities/usuario.entity';
+import { User } from '../../user/entities/user.entity';
 
 @Entity({ name: 'tb_product' })
 export class Product {

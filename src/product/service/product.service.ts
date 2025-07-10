@@ -8,7 +8,7 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-  ) {}
+  ) { }
 
   async create(data: Partial<Product>): Promise<Product> {
     const product = this.productRepository.create(data);
@@ -17,14 +17,14 @@ export class ProductService {
 
   findAll(): Promise<Product[]> {
     return this.productRepository.find({
-      relations: ['categoria', 'usuario'], // Carrega as relações no retorno
+      relations: { category: true, user: true } // Carrega as relações no retorno
     });
   }
 
   async findById(id: number): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { id },
-      relations: ['categoria', 'usuario'],
+      relations: { category: true, user: true }
     });
 
     if (!product) {
@@ -34,20 +34,29 @@ export class ProductService {
     return product;
   }
 
-  findByDescricao(descricao: string): Promise<Product[]> {
+  findByProduct(product: string): Promise<Product[]> {
     return this.productRepository.find({
       where: {
-        descricao: ILike(`%${descricao}%`),
+        nameProduct: ILike(`%${product}%`),
       },
-      relations: ['categoria', 'usuario'],
+      relations: { category: true, user: true }
     });
   }
 
-  async update(id: number, data: Partial<Product>): Promise<Product> {
-    const product = await this.findById(id);
-    Object.assign(product, data);
-    return this.productRepository.save(product);
+  async update(product: Product): Promise<Product> {
+    await this.findById(product.id);
+    /*Object.assign(product);*/
+    return await this.productRepository.save(product);
   }
+
+
+  /*async update(postagem: Postagem): Promise<Postagem> {
+    await this.findById(postagem.id);
+
+    await this.TemaService.findById(postagem.tema.id);
+
+    return await this.postagemRepository.save(postagem);
+  } modelo blog*/
 
   async delete(id: number): Promise<void> {
     const product = await this.findById(id);

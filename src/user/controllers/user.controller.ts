@@ -10,10 +10,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { User } from '../entities/user.entity';
+import { UserService } from '../service/user.service';
 
 @Controller('/users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -39,9 +41,9 @@ export class UserController {
     return this.userService.update(user);
   }
 
-  @Delete('/:id')
+  /*@Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.userService.delete(id);
-  }
+  }*/
 }

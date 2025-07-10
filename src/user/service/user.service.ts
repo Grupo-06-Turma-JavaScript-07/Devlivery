@@ -14,14 +14,14 @@ export class UserService {
 
     async findByNome(nome: string): Promise<User | null> {
         return await this.userRepository.findOne({
-            where: {nome: ILike(`%${nome}%`)},
-            /*relations: {product: true}*/
+            where: { nome: ILike(`%${nome}%`) },
+            relations: { product: true }
         })
     }
 
     async findAll(): Promise<User[]> {
         return await this.userRepository.find({
-            /*relations: {product: true}*/
+            relations: { product: true }
         });
 
 
@@ -30,8 +30,8 @@ export class UserService {
     async findById(id: number): Promise<User> {
 
         const user = await this.userRepository.findOne({
-            where: {id},
-            /*relations: {product: true}*/
+            where: { id },
+            relations: { product: true }
         });
 
         if (!user)
@@ -42,13 +42,13 @@ export class UserService {
     }
 
     async create(user: User): Promise<User> {
-        
+
         const buscaUser = await this.findByNome(user.usuario);
 
         if (buscaUser)
             throw new HttpException("O Usuário já existe!", HttpStatus.BAD_REQUEST);
 
-        /*usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)*/
+        /*user.senha = await this.bcrypt.criptografarSenha(user.senha)*/
         return await this.userRepository.save(user);
 
     }
@@ -59,16 +59,16 @@ export class UserService {
 
         const buscaUser = await this.findByNome(user.usuario);
         const existingUser = await this.userRepository.findOne({
-      where: {
-        nome: user.nome,
-        id: Not(user.id) // Procura em todos, menos no usuário que esta alterando
-      }
-    })
+            where: {
+                nome: user.nome,
+                id: Not(user.id) // Procura em todos, menos no usuário que esta alterando
+            }
+        })
         if (!buscaUser || !user.id)
-      throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
+            throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
         if (existingUser) {
-      throw new HttpException('Nome de usuário já cadastrado!', HttpStatus.CONFLICT);
-    }
+            throw new HttpException('Nome de usuário já cadastrado!', HttpStatus.CONFLICT);
+        }
 
         /*user.senha = await this.bcrypt.criptografarSenha(user.senha)*/
         return await this.userRepository.save(user);
