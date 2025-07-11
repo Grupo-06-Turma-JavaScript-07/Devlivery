@@ -12,9 +12,9 @@ export class UserService {
         private bcrypt: Bcrypt
     ) { }
 
-    async findByNome(nome: string): Promise<User | null> {
+    async findByUsuario(usuario: string): Promise<User | null> {
         return await this.userRepository.findOne({
-            where: { nome: ILike(`%${nome}%`) },
+            where: { usuario: usuario },
             relations: { product: true }
         })
     }
@@ -43,7 +43,7 @@ export class UserService {
 
     async create(user: User): Promise<User> {
 
-        const buscaUser = await this.findByNome(user.usuario);
+        const buscaUser = await this.findByUsuario(user.usuario);
 
         if (buscaUser)
             throw new HttpException("O Usuário já existe!", HttpStatus.BAD_REQUEST);
@@ -57,7 +57,7 @@ export class UserService {
 
         await this.findById(user.id);
 
-        const buscaUser = await this.findByNome(user.usuario);
+        const buscaUser = await this.findByUsuario(user.usuario);
         const existingUser = await this.userRepository.findOne({
             where: {
                 nome: user.nome,
