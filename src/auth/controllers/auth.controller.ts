@@ -17,5 +17,3 @@ export class AuthController {
     }
 
 }
-
-//postgresql://devlivery_user:0yYEouSjOXyTn2tnIEFXw1BpNnsDcp5D@dpg-d1oh0mvfte5s73bb823g-a.oregon-postgres.render.com:5432/devlivery
