@@ -36,12 +36,12 @@ export class UserController {
     return this.userService.findById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  /*@UseGuards(JwtAuthGuard)
   @Get('/usuario/:usuario')
   @HttpCode(HttpStatus.OK)
-  findByProduct(@Param('usuario') usuario: string): Promise<User | null> {
+  findByUsuario(@Param('usuario') usuario: string): Promise<User | null> {
     return this.userService.findByUsuario(usuario);
-  }
+  }*/
 
   @HttpCode(HttpStatus.CREATED)
   @Post()
