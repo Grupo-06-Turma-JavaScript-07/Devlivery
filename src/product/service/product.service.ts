@@ -8,23 +8,20 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-  ) {}
+  ) { }
 
-  async create(data: Partial<Product>): Promise<Product> {
-    const product = this.productRepository.create(data);
-    return this.productRepository.save(product);
-  }
+
 
   findAll(): Promise<Product[]> {
     return this.productRepository.find({
-      relations: ['categoria', 'usuario'], // Carrega as relações no retorno
+      relations: { category: true, user: true } // Carrega as relações no retorno
     });
   }
 
   async findById(id: number): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { id },
-      relations: ['categoria', 'usuario'],
+      relations: { category: true, user: true }
     });
 
     if (!product) {
@@ -34,20 +31,40 @@ export class ProductService {
     return product;
   }
 
-  findByDescricao(descricao: string): Promise<Product[]> {
+  findByProduct(product: string): Promise<Product[]> {
     return this.productRepository.find({
       where: {
-        descricao: ILike(`%${descricao}%`),
+        nameProduct: ILike(`%${product}%`),
       },
-      relations: ['categoria', 'usuario'],
+      relations: { category: true, user: true }
     });
   }
 
-  async update(id: number, data: Partial<Product>): Promise<Product> {
-    const product = await this.findById(id);
-    Object.assign(product, data);
+  /* Lógica de Recomendações de Produtos Saudáveis*/
+  async recomendarSaudaveis(): Promise<Product[]> {
+    return this.productRepository.find({
+      where: [
+        { description: ILike('%saudável%') },
+        { description: ILike('%fit%') },
+        { description: ILike('%natural%') },
+        { nameProduct: ILike('%integral%') },
+        { nameProduct: ILike('%sem açúcar%') },
+      ],
+      relations: ['category', 'user'],
+    });
+  }
+
+  async create(data: Partial<Product>): Promise<Product> {
+    const product = this.productRepository.create(data);
     return this.productRepository.save(product);
   }
+
+  async update(product: Product): Promise<Product> {
+    await this.findById(product.id);
+    /*Object.assign(product);*/
+    return await this.productRepository.save(product);
+  }
+
 
   async delete(id: number): Promise<void> {
     const product = await this.findById(id);

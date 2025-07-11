@@ -8,7 +8,7 @@ export class CategoryService {
   constructor(
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
-  ) {}
+  ) { }
 
   async findAll(): Promise<Category[]> {
     return await this.categoryRepository.find({
@@ -37,7 +37,7 @@ export class CategoryService {
     return category;
   }
 
-  async findAllByCategoria(categoria: string): Promise<Category[]> {
+  async findAllByCategory(categoria: string): Promise<Category[]> {
     return await this.categoryRepository.find({
       where: {
         categoria: ILike(`%${categoria}%`),

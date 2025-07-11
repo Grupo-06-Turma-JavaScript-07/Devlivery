@@ -12,13 +12,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Product } from '../entities/product.entity';
-import { ProductService } from '../services/product.service';
+import { ProductService } from '../service/product.service';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Product')
 @UseGuards(JwtAuthGuard)
 @Controller('/Product')
+@ApiBearerAuth()
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   @Get()
   @HttpCode(HttpStatus.OK)
@@ -32,9 +35,16 @@ export class ProductController {
   }
   @Get('/nameProduct/:nameProduct')
   @HttpCode(HttpStatus.OK)
-  findByAllTitulo(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
-    return this.productService.findAllByTitulo(nameProduct);
+  findByProduct(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
+    return this.productService.findByProduct(nameProduct);
   }
+
+  @Get('recomendados/:lista')
+  @HttpCode(HttpStatus.OK)
+  getRecomendados() {
+    return this.productService.recomendarSaudaveis();
+  }
+
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() product: Product): Promise<Product> {
@@ -48,6 +58,6 @@ export class ProductController {
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id', ParseIntPipe) id: number) {
-    return this.Service.delete(id);
+    return this.productService.delete(id);
   }
 }

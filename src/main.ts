@@ -1,22 +1,26 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-@Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'db_delivey',
-      entities: [],
-      synchronize: true,
-    })
-  ],
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-  controllers: [],
-  providers: [],
-})
+  const config = new DocumentBuilder()
+  .setTitle('Devlivery - Plataforma de delivery de alimentos saudáveis')
+  .setDescription('Deploy de sabor e saúde no seu dia, peça já!')
+  .setContact("Grupo 6",
+    "https://github.com/Grupo-06-Turma-JavaScript-07/Devlivery",
+    "grupo6projint@gmail.com")
+  .setVersion('1.0')
+  .addBearerAuth()
+  .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/swagger', app, document);
 
-export class AppModule { }
+  process.env.TZ = '-03:00'
+  app.useGlobalPipes (new ValidationPipe());
+  app.enableCors();
+  await app.listen(process.env. PORT ?? 4000);
+}
+bootstrap();
