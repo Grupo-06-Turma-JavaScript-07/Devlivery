@@ -14,7 +14,6 @@ export class AuthService {
     ) { }
 
     async validateUser(username: string, password: string): Promise<any> {
-
         const buscaUsuario = await this.userService.findByNome(username)
 
         if (!buscaUsuario)
@@ -32,23 +31,19 @@ export class AuthService {
     }
 
     async login(usuarioLogin: UsuarioLogin) {
+    const payload = { sub: usuarioLogin.usuario };
 
-        const payload = { sub: usuarioLogin.usuario }
+    const buscaUsuario = await this.userService.findByNome(
+      usuarioLogin.usuario,
+    );
 
-        const buscaUsuario = await this.userService.findByNome(usuarioLogin.usuario)
-
-        //Encontrei essa forma de corrigir o erro com essa validação para o TS parar de achar que o user retornaria null
-        if (!buscaUsuario) {
-            throw new HttpException('Usuário ou senha inválidos', HttpStatus.UNAUTHORIZED);
-        }
-
-        return {
-            id: buscaUsuario.id,
-            nome: buscaUsuario.nome,
-            usuario: usuarioLogin.usuario,
-            senha: '',
-            foto: buscaUsuario.foto,
-            token: `Bearer ${this.jwtService.sign(payload)}`,
+    return {
+      id: buscaUsuario?.id,
+      nome: buscaUsuario?.nome,
+      usuario: usuarioLogin.usuario,
+      senha: '',
+      foto: buscaUsuario?.foto,
+      token: `Bearer ${this.jwtService.sign(payload)}`,
         }
 
     }
