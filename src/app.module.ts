@@ -4,15 +4,16 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
 import { ConfigModule } from '@nestjs/config';
-import { ProdService } from './data/services/prod.services';
+// import { ProdService } from './data/services/prod.services';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
+import { DevService } from './data/services/dev.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
-      useClass: ProdService,
+      useClass: DevService,
       imports: [ConfigModule],
       
     }),

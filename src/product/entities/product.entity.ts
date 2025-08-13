@@ -34,8 +34,8 @@ export class Product {
 
   @ApiProperty()
   @IsNotEmpty()
-  @Column({ type: 'date', nullable: false })
-  validity: Date;
+  @Column({ length: 10000, nullable: false })
+  picture: string;
 
   @ApiProperty({ type: () => Category })
   @ManyToOne(() => Category, (category) => category.product, {
