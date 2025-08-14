@@ -39,7 +39,7 @@ export class ProductController {
     return this.productService.findByProduct(nameProduct);
   }
 
-  @Get('recomendados/:lista')
+  @Get('recomendados')
   @HttpCode(HttpStatus.OK)
   getRecomendados() {
     return this.productService.recomendarSaudaveis();
