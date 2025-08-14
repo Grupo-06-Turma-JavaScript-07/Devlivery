@@ -28,6 +28,14 @@ export class ProductController {
   findAll(): Promise<Product[]> {
     return this.productService.findAll();
   }
+
+  @Get('/recomendados')
+  @HttpCode(HttpStatus.OK)
+  getRecomendados() {
+    return this.productService.recomendarSaudaveis();
+  }
+
+
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
   findById(@Param('id', ParseIntPipe) id: number): Promise<Product> {
@@ -37,12 +45,6 @@ export class ProductController {
   @HttpCode(HttpStatus.OK)
   findByProduct(@Param('nameProduct') nameProduct: string): Promise<Product[]> {
     return this.productService.findByProduct(nameProduct);
-  }
-
-  @Get('/recomendados')
-  @HttpCode(HttpStatus.OK)
-  getRecomendados() {
-    return this.productService.recomendarSaudaveis();
   }
 
   @Post()
