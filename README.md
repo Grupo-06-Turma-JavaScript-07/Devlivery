@@ -47,7 +47,7 @@ Este repositório contém o **backend** da aplicação, desenvolvido com **Node.
 | nome          | string   | Nome do produto                  |
 | descricao     | string   | Ingredientes do produto          |
 | preco         | number   | Preço do produto                 |
-| validade      | Date     | Data de validade                 |
+| foto          | string   | Foto do produto                  |
 | categoria     | Categoria| Categoria associada              |
 
 ### 🍱 Categoria
